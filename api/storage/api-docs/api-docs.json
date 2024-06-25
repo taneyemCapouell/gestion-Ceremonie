@@ -1,0 +1,2729 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "EventManagement swagger application",
+        "description": "Api d'une Application de  gestion des evenements ",
+        "contact": {
+            "email": "taneyemc@gmail.com"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/api/event/addEventType": {
+            "post": {
+                "tags": [
+                    "event"
+                ],
+                "summary": "Add Event Type",
+                "description": "Create a new event type",
+                "operationId": "21dec565693de23f69731c738f29d649",
+                "requestBody": {
+                    "description": "Event type details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Event type name",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Event type added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Event type added successfully"
+                                        },
+                                        "event_type": {
+                                            "$ref": "#/components/schemas/EventType"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erreur de validation"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/event/addEvent": {
+            "post": {
+                "tags": [
+                    "event"
+                ],
+                "summary": "Add new event",
+                "description": "Create a new event",
+                "operationId": "a4052126e39fd03e7fb8cb90813f2e98",
+                "requestBody": {
+                    "description": "Event details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "location",
+                                    "city",
+                                    "date_start",
+                                    "time",
+                                    "owner_id",
+                                    "number_of_space",
+                                    "number_of_table",
+                                    "event_type_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Event's name",
+                                        "type": "string"
+                                    },
+                                    "location": {
+                                        "description": "Event's location",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Event's description",
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "description": "Event's city",
+                                        "type": "string"
+                                    },
+                                    "date_start": {
+                                        "description": "Event's date_start",
+                                        "type": "string"
+                                    },
+                                    "time": {
+                                        "description": "Event's time",
+                                        "type": "string"
+                                    },
+                                    "neighborhood": {
+                                        "description": "Event's neighborhood",
+                                        "type": "string"
+                                    },
+                                    "owner_id": {
+                                        "description": "Event's owner_id",
+                                        "type": "string"
+                                    },
+                                    "number_of_space": {
+                                        "description": "Event's number_of_space",
+                                        "type": "string"
+                                    },
+                                    "number_of_table": {
+                                        "description": "Event's number_of_table",
+                                        "type": "string"
+                                    },
+                                    "event_type_id": {
+                                        "description": "Event's event_type_id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Event added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Event added successfully"
+                                        },
+                                        "event": {
+                                            "$ref": "#/components/schemas/Event"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "location": [
+                                                    "The location field is required."
+                                                ],
+                                                "city": [
+                                                    "The city field is required."
+                                                ],
+                                                "date_start": [
+                                                    "The date_start field is required."
+                                                ],
+                                                "time": [
+                                                    "The time field is required."
+                                                ],
+                                                "owner_id": [
+                                                    "The owner_id field is required."
+                                                ],
+                                                "number_of_space": [
+                                                    "The number_of_space field is required."
+                                                ],
+                                                "number_of_table": [
+                                                    "The number_of_table field is required."
+                                                ],
+                                                "event_type_id": [
+                                                    "The event_type_id field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/event/updateEvent/{event}": {
+            "put": {
+                "tags": [
+                    "event"
+                ],
+                "summary": "Update a single event",
+                "description": "Update details of an existing event",
+                "operationId": "9dfa766492d7617560913af6a4482e94",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the event to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated event details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "location",
+                                    "city",
+                                    "date_start",
+                                    "time",
+                                    "owner_id",
+                                    "number_of_space",
+                                    "number_of_table",
+                                    "event_type_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Event's name",
+                                        "type": "string"
+                                    },
+                                    "location": {
+                                        "description": "Event's location",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Event's description",
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "description": "Event's city",
+                                        "type": "string"
+                                    },
+                                    "date_start": {
+                                        "description": "Event's date_start",
+                                        "type": "string"
+                                    },
+                                    "time": {
+                                        "description": "Event's time",
+                                        "type": "string"
+                                    },
+                                    "neighborhood": {
+                                        "description": "Event's neighborhood",
+                                        "type": "string"
+                                    },
+                                    "owner_id": {
+                                        "description": "Event's owner_id",
+                                        "type": "string"
+                                    },
+                                    "number_of_space": {
+                                        "description": "Event's number_of_space",
+                                        "type": "string"
+                                    },
+                                    "number_of_table": {
+                                        "description": "Event's number_of_table",
+                                        "type": "string"
+                                    },
+                                    "event_type_id": {
+                                        "description": "Event's event_type_id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Event updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Event updated successfully"
+                                        },
+                                        "event": {
+                                            "$ref": "#/components/schemas/Event"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Event not found"
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "location": [
+                                                    "The location field is required."
+                                                ],
+                                                "city": [
+                                                    "The city field is required."
+                                                ],
+                                                "date_start": [
+                                                    "The date_start field is required."
+                                                ],
+                                                "time": [
+                                                    "The time field is required."
+                                                ],
+                                                "owner_id": [
+                                                    "The owner_id field is required."
+                                                ],
+                                                "number_of_space": [
+                                                    "The number_of_space field is required."
+                                                ],
+                                                "number_of_table": [
+                                                    "The number_of_table field is required."
+                                                ],
+                                                "event_type_id": [
+                                                    "The event_type_id field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/event/updateEventStatus/{event}": {
+            "put": {
+                "tags": [
+                    "event"
+                ],
+                "summary": "Update event status",
+                "description": "Update an existing event by ID",
+                "operationId": "3def4b1a2ee27e2d0e6d4711f614484d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the event",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Guest updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Event cancelled successfully"
+                                        },
+                                        "guest": {
+                                            "$ref": "#/components/schemas/Guest"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Guest not found"
+                    },
+                    "422": {
+                        "description": "The event is in progress cannot change the status."
+                    },
+                    "421": {
+                        "description": "he event is already canceled."
+                    }
+                }
+            }
+        },
+        "/api/event/getAllEvent": {
+            "get": {
+                "tags": [
+                    "event"
+                ],
+                "summary": "Get all events",
+                "description": "Retrieve a list of all events",
+                "operationId": "3ec44eb94a4cfc1570ede72962d5cf8d",
+                "responses": {
+                    "200": {
+                        "description": "List of events",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Event"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/event/showEvent/{event}": {
+            "get": {
+                "tags": [
+                    "event"
+                ],
+                "summary": "Show event details",
+                "description": "Retrieve details of a single event by its ID",
+                "operationId": "5f399c45fa9869288584ba2f89c68c5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the event",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Event details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Event details retrieved successfully"
+                                        },
+                                        "event": {
+                                            "$ref": "#/components/schemas/Event"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Event not found"
+                    }
+                }
+            }
+        },
+        "/api/guest/addGuest": {
+            "post": {
+                "tags": [
+                    "guest"
+                ],
+                "summary": "Add new guest",
+                "description": "Create a new guest",
+                "operationId": "887636e20659c850684a20040aba837c",
+                "requestBody": {
+                    "description": "Guest details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "email",
+                                    "phone",
+                                    "place_id",
+                                    "table_id",
+                                    "event_id"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "description": "Guest's firstname",
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "description": "Guest's lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Guest's email",
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "description": "Guest's gender",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Guest's phone",
+                                        "type": "string"
+                                    },
+                                    "place_id": {
+                                        "description": "Guest's place_id",
+                                        "type": "string"
+                                    },
+                                    "table_id": {
+                                        "description": "Guest's table_id",
+                                        "type": "string"
+                                    },
+                                    "event_id": {
+                                        "description": "Guest's event_id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Guest added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Guest added successfully"
+                                        },
+                                        "guest": {
+                                            "$ref": "#/components/schemas/Guest"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "firstname": [
+                                                    "The firstname field is required."
+                                                ],
+                                                "email": [
+                                                    "The email field is required.",
+                                                    "The email field must be in the form of an email address."
+                                                ],
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ],
+                                                "place_id": [
+                                                    "The place_id field is required."
+                                                ],
+                                                "table_id": [
+                                                    "The table_id field is required."
+                                                ],
+                                                "event_id": [
+                                                    "The event_id field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/guest/updateGuest/{guest}": {
+            "put": {
+                "tags": [
+                    "guest"
+                ],
+                "summary": "Update an guest",
+                "description": "Update an existing guest by ID",
+                "operationId": "507b4d56a0f89353d8a22b77f230289f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the guest",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Guest details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "email",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "description": "Guest's firstname",
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "description": "Guest's lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Guest's email",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Guest's phone",
+                                        "type": "string"
+                                    },
+                                    "place_id": {
+                                        "description": "Guest's place_id",
+                                        "type": "string"
+                                    },
+                                    "table_id": {
+                                        "description": "Guest's table_id",
+                                        "type": "string"
+                                    },
+                                    "event_id": {
+                                        "description": "Guest's event_id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Guest updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Guest updated successfully"
+                                        },
+                                        "guest": {
+                                            "$ref": "#/components/schemas/Guest"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Guest not found"
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "firstname": [
+                                                    "The firstname field is required."
+                                                ],
+                                                "email": [
+                                                    "The email field is required.",
+                                                    "The email field must be in the form of an email address."
+                                                ],
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/guest/getAllGuest": {
+            "get": {
+                "tags": [
+                    "guest"
+                ],
+                "summary": "Get all guest",
+                "description": "Retrieve a list of all guest",
+                "operationId": "33262a842b83a11bcff343654bccd52d",
+                "responses": {
+                    "200": {
+                        "description": "List of all guest",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Guest"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No owners found"
+                    }
+                }
+            }
+        },
+        "/api/guest/showGuest/{guest}": {
+            "get": {
+                "tags": [
+                    "guest"
+                ],
+                "summary": "Show guest detail by ID",
+                "description": "Retrieve details of a specific guest by ID",
+                "operationId": "8abd5a8dec8807e4e8d2c0194f189016",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the guest",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Guest details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Guest"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Guest not found"
+                    }
+                }
+            }
+        },
+        "/api/guest/import/guest": {
+            "post": {
+                "tags": [
+                    "guest"
+                ],
+                "summary": "Import guest from CSV",
+                "description": "Import guest from a CSV file.",
+                "operationId": "7135b04e19e1a468d5b406dcdc7b6afd",
+                "requestBody": {
+                    "description": "CSV file",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "CSV file containing guest data",
+                                        "type": "file",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Guest imported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Guest imported successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error or import failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error or import failure"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "file": [
+                                                    "The file field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/owner/addOwner": {
+            "post": {
+                "tags": [
+                    "owner"
+                ],
+                "summary": "Add owner",
+                "description": "Create a new owner",
+                "operationId": "d9f7f4799ecd9bcd2699a59f17ab65bb",
+                "requestBody": {
+                    "description": "Owner details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "email",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "description": "Owner's firstname",
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "description": "Owner's lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Owner's email",
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "description": "Owner's gender",
+                                        "type": "string"
+                                    },
+                                    "adresse": {
+                                        "description": "Owner's adresse",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Owner's phone",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Owner's description",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Owner added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Owner added successfully"
+                                        },
+                                        "owner": {
+                                            "$ref": "#/components/schemas/Owner"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "firstname": [
+                                                    "The firstname field is required."
+                                                ],
+                                                "email": [
+                                                    "The email field is required.",
+                                                    "The email field must be in the form of an email address.",
+                                                    "there is already a user with this email address, please try another"
+                                                ],
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/owner/updateOwner/{owner}": {
+            "put": {
+                "tags": [
+                    "owner"
+                ],
+                "summary": "Update an Owner",
+                "description": "Update an existing owner by ID",
+                "operationId": "a9f86ac4dbafff56714eef21770b3e6a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the owner",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Owner details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "email",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "description": "Owner's firstname",
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "description": "Owner's lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Owner's email",
+                                        "type": "string"
+                                    },
+                                    "gender": {
+                                        "description": "Owner's gender",
+                                        "type": "string"
+                                    },
+                                    "adresse": {
+                                        "description": "Owner's adresse",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Owner's phone",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Owner's description",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Owner updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Owner updated successfully"
+                                        },
+                                        "owner": {
+                                            "$ref": "#/components/schemas/Owner"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Owner not found"
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "firstname": [
+                                                    "The firstname field is required."
+                                                ],
+                                                "email": [
+                                                    "The email field is required.",
+                                                    "The email field must be in the form of an email address."
+                                                ],
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/owner/getAllOwner": {
+            "get": {
+                "tags": [
+                    "owner"
+                ],
+                "summary": "Get all Owners",
+                "description": "Retrieve a list of all owners",
+                "operationId": "30f42cc290b7e2a78706b1b0af868d82",
+                "responses": {
+                    "200": {
+                        "description": "List of all owners",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Owner"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No owners found"
+                    }
+                }
+            }
+        },
+        "/api/owner/showOwner/{owner}": {
+            "get": {
+                "tags": [
+                    "owner"
+                ],
+                "summary": "Show Owner detail by ID",
+                "description": "Retrieve details of a specific owner by ID",
+                "operationId": "66ebaaa14e416a6fdd0f9d3070adb329",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the owner",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Owner details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Owner"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Owner not found"
+                    }
+                }
+            }
+        },
+        "/api/table/addPlace": {
+            "post": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Add place",
+                "description": "Create a new place",
+                "operationId": "07bd5d8d31f9fd25bced582951377a71",
+                "requestBody": {
+                    "description": "Place detail",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Place's name",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Place added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Place added successfully"
+                                        },
+                                        "place": {
+                                            "$ref": "#/components/schemas/Place"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/table/addCategory": {
+            "post": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Add category of place",
+                "description": "Create a new category of place",
+                "operationId": "997452ad28c3240921de9f6d34960d11",
+                "requestBody": {
+                    "description": "Category detail",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Category's name",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Category added successfully"
+                                        },
+                                        "category": {
+                                            "$ref": "#/components/schemas/Category"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/table/addTable": {
+            "post": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Add new table",
+                "description": "Create a new table",
+                "operationId": "cde360ebde73919262eb196b91be3e9d",
+                "requestBody": {
+                    "description": "Table details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "categorie_id",
+                                    "capacity",
+                                    "event_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Table's name",
+                                        "type": "string"
+                                    },
+                                    "capacity": {
+                                        "description": "Table's capacity",
+                                        "type": "number"
+                                    },
+                                    "categorie_id": {
+                                        "description": "Table's categorie_id",
+                                        "type": "string"
+                                    },
+                                    "event_id": {
+                                        "description": "Table's event_id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Table added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Table added successfully"
+                                        },
+                                        "table": {
+                                            "$ref": "#/components/schemas/Table"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "capacity": [
+                                                    "The capacity field is required."
+                                                ],
+                                                "categorie_id": [
+                                                    "The categorie_id field is required."
+                                                ],
+                                                "event_id": [
+                                                    "The event_id field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/table/attributeTable/{attributeTable}": {
+            "post": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Assign a place to a table",
+                "description": "Assign a place",
+                "operationId": "fea2ab29edf88d96559a6f68b9b903ae",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the table",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Assign detail",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "place_id"
+                                ],
+                                "properties": {
+                                    "place_id": {
+                                        "description": "Assign's place_id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Place successfully assigned to the table",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Place successfully assigned to the table"
+                                        },
+                                        "placeTable": {
+                                            "$ref": "#/components/schemas/PlaceTable"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "\n     *                  place_id": [
+                                                    "The place_id field is required.",
+                                                    "This place has already been assigned to a guest, try another"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/table/updateTable/{id}": {
+            "put": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Update a single table",
+                "description": "Update details of an existing table",
+                "operationId": "016f968a318341ab6957f4abc3c3f139",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the table to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated table details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "categorie_id",
+                                    "capacity",
+                                    "event_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Updated table name",
+                                        "type": "string"
+                                    },
+                                    "capacity": {
+                                        "description": "Updated table capacity",
+                                        "type": "number"
+                                    },
+                                    "categorie_id": {
+                                        "description": "Updated table categorie_id",
+                                        "type": "string"
+                                    },
+                                    "event_id": {
+                                        "description": "Updated table event_id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Table updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Table updated successfully"
+                                        },
+                                        "table": {
+                                            "$ref": "#/components/schemas/Table"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Table not found"
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "capacity": [
+                                                    "The capacity field is required."
+                                                ],
+                                                "categorie_id": [
+                                                    "The categorie_id field is required."
+                                                ],
+                                                "event_id": [
+                                                    "The event_id field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/table/getAllTable": {
+            "get": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Get all table",
+                "description": "Retrieve a list of all table",
+                "operationId": "717dc1696622d5ef17cd458d9be1ffcb",
+                "responses": {
+                    "200": {
+                        "description": "List of all table",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Table"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No table found"
+                    }
+                }
+            }
+        },
+        "/api/table/showTable/{table}": {
+            "get": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Get table by ID",
+                "description": "Retrieve details of a specific table by ID",
+                "operationId": "2b9b0d3950543201b77e8a4e50c32318",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the table",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "table details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Table"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Table not found"
+                    }
+                }
+            }
+        },
+        "/api/table/import/place": {
+            "post": {
+                "tags": [
+                    "table"
+                ],
+                "summary": "Import place from CSV",
+                "description": "Import place from a CSV file.",
+                "operationId": "e29e40bb9ef059a509de94b6cc185fc8",
+                "requestBody": {
+                    "description": "CSV file",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "CSV file containing place data",
+                                        "type": "file",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Place imported successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Place imported successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error or import failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error or import failure"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "file": [
+                                                    "The file field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/store": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Register a new User",
+                "description": "Create a new user with the provided details",
+                "operationId": "1dbed59d84ed298201a3d1e168968f9a",
+                "requestBody": {
+                    "description": "User registration details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "gender",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "description": "User firstname",
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "description": "User lastname",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "gender": {
+                                        "description": "User gender",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "User phone",
+                                        "type": "number"
+                                    },
+                                    "profile_image": {
+                                        "description": "User profile_image",
+                                        "type": "string",
+                                        "format": "file"
+                                    },
+                                    "role_id": {
+                                        "description": "User role_id",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "User password confirmation",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Utilisateur créé avec succès"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erreur de validation"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "firstname": [
+                                                    "Le champ firstname est requis."
+                                                ],
+                                                "email": [
+                                                    "Le champ email est requis.",
+                                                    "Le champ email doit être une adresse email valide."
+                                                ],
+                                                "gender": [
+                                                    "Le champ gender est requis."
+                                                ],
+                                                "password": [
+                                                    "Le champ password est requis.",
+                                                    "Veillez confirmer le mot de passe.",
+                                                    "Le mot de passe doit avoir au moins 6 caractères."
+                                                ],
+                                                "role_id": [
+                                                    "Le champ role est requis."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/getAllUser": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get all Users",
+                "description": "Retrieve a list of all users",
+                "operationId": "89f8e3eb360beadee927854d1de1c13c",
+                "responses": {
+                    "200": {
+                        "description": "List of users"
+                    }
+                }
+            }
+        },
+        "/api/showUser/{user}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user by ID",
+                "description": "Get user details by user ID",
+                "operationId": "d3053930a078533947f82d26743486ff",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/user/updateUser/{user}": {
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update User",
+                "description": "Update details of a user by their ID",
+                "operationId": "ea047b27d38dca6823e2a4ead89599c4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "email",
+                                    "phone",
+                                    "gender",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "email"
+                                    },
+                                    "phone": {
+                                        "type": "number"
+                                    },
+                                    "gender": {
+                                        "type": "string"
+                                    },
+                                    "role_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successful updated."
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/user/toggleStatus/{user}": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Activate/Deactivate user",
+                "description": "Activate or deactivate a user account by user ID",
+                "operationId": "c7577feb5f83d1d8bb295d07207e0430",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User account status updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cet utilisateur a bien été activé"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "User account status updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cet utilisateur a bien été désactivé"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/user/upload_profileImage": {
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update user profile image",
+                "description": "Update the profile image",
+                "operationId": "22c93c3f9ad44e9bec9805c6bd4ecf3f",
+                "requestBody": {
+                    "description": "User profile image details",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "profile_image"
+                                ],
+                                "properties": {
+                                    "profile_image": {
+                                        "description": "User profile image file",
+                                        "type": "string",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User profile image updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Photo de profil mise à jour avec succès"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User Register",
+                "description": "Crée un nouvel utilisateur avec les détails fournis",
+                "operationId": "Register",
+                "requestBody": {
+                    "description": "User model",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable entry",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User login",
+                "description": "Se connecetr en utilisant le mot de passe et une adresse email",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "email",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successful logged in.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "JWT token for authentication",
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "description": "Token type (Bearer)",
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "description": "Token expiration time in seconds",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/auth/profile": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Get user profile",
+                "operationId": "profile",
+                "responses": {
+                    "200": {
+                        "description": "User profile retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User Logout",
+                "description": "Logout the authenticated user",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/updateUserPassword": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Update User Password",
+                "description": "Update the password of the authenticated user",
+                "operationId": "a31d9a91f787435548f37c7748539494",
+                "requestBody": {
+                    "description": "Password update details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "old_password",
+                                    "new_password",
+                                    "confirm_password"
+                                ],
+                                "properties": {
+                                    "old_password": {
+                                        "description": "Old password",
+                                        "type": "password",
+                                        "format": "password"
+                                    },
+                                    "new_password": {
+                                        "description": "New password",
+                                        "type": "password",
+                                        "format": "password"
+                                    },
+                                    "confirm_password": {
+                                        "description": "Confirm new password",
+                                        "type": "password",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password successfully updated"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "EventType": {
+                "required": [
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Place's name",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Event": {
+                "required": [
+                    "name",
+                    "location",
+                    "city",
+                    "date_start",
+                    "time",
+                    "owner_id",
+                    "number_of_space",
+                    "number_of_table",
+                    "event_type_id"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Event's name",
+                        "type": "string"
+                    },
+                    "location": {
+                        "description": "Event's location",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Event's description",
+                        "type": "string"
+                    },
+                    "city": {
+                        "description": "Event's city",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "Event's status",
+                        "type": "enum"
+                    },
+                    "rest_of_space": {
+                        "description": "Event's rest_of_space",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Event's created_at",
+                        "type": "string"
+                    },
+                    "rest_of_table": {
+                        "description": "Event's rest_of_table",
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "description": "Event's updated_at",
+                        "type": "string"
+                    },
+                    "date_start": {
+                        "description": "Event's date_start",
+                        "type": "string"
+                    },
+                    "time": {
+                        "description": "Event's time",
+                        "type": "string"
+                    },
+                    "neighborhood": {
+                        "description": "Event's neighborhood",
+                        "type": "string"
+                    },
+                    "owner_id": {
+                        "description": "Event's owner_id",
+                        "type": "string"
+                    },
+                    "number_of_space": {
+                        "description": "Event's number_of_space",
+                        "type": "string"
+                    },
+                    "number_of_table": {
+                        "description": "Event's number_of_table",
+                        "type": "string"
+                    },
+                    "event_type_id": {
+                        "description": "Event's event_type_id",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Guest": {
+                "required": [
+                    "firstname",
+                    "email",
+                    "phone",
+                    "place_id",
+                    "table_id",
+                    "event_id"
+                ],
+                "properties": {
+                    "firstname": {
+                        "description": "Guest's firstname",
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "description": "Guest's lastname",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Guest's email",
+                        "type": "string"
+                    },
+                    "gender": {
+                        "description": "Guest's gender",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Guest's phone",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "Guest's status",
+                        "type": "enum"
+                    },
+                    "place_id": {
+                        "description": "Guest's place_id",
+                        "type": "string"
+                    },
+                    "table_id": {
+                        "description": "Guest's table_id",
+                        "type": "string"
+                    },
+                    "event_id": {
+                        "description": "Guest's event_id",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Owner": {
+                "required": [
+                    "firstname",
+                    "email",
+                    "phone"
+                ],
+                "properties": {
+                    "firstname": {
+                        "description": "Owner's firstname",
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "description": "Owner's lastname",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Owner's email",
+                        "type": "string"
+                    },
+                    "gender": {
+                        "description": "Owner's gender",
+                        "type": "string"
+                    },
+                    "adresse": {
+                        "description": "Owner's adresse",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Owner's phone",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Owner's description",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Place": {
+                "required": [
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Event type name",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Category": {
+                "required": [
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Category place name",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Table": {
+                "required": [
+                    "name",
+                    "categorie_id",
+                    "capacity",
+                    "event_id"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Table's name",
+                        "type": "string"
+                    },
+                    "capacity": {
+                        "description": "Table's capacity",
+                        "type": "number"
+                    },
+                    "status": {
+                        "description": "Table's status",
+                        "type": "boolean"
+                    },
+                    "guests": {
+                        "description": "Table's guests",
+                        "type": "string"
+                    },
+                    "rest_of_place": {
+                        "description": "Table's rest_of_place",
+                        "type": "number"
+                    },
+                    "qr_code_path": {
+                        "description": "Table's qr_code_path",
+                        "type": "string"
+                    },
+                    "categorie_id": {
+                        "description": "Table's categorie_id",
+                        "type": "string"
+                    },
+                    "event_id": {
+                        "description": "Table's event_id",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PlaceTable": {
+                "required": [
+                    "place_id"
+                ],
+                "properties": {
+                    "place_id": {
+                        "description": "Assign's place_id",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "required": [
+                    "firstname",
+                    "email",
+                    "password",
+                    "password_confirmation",
+                    "gender",
+                    "role_id"
+                ],
+                "properties": {
+                    "firstname": {
+                        "description": "User firstname",
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "description": "User lastname",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "User email",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "gender": {
+                        "description": "User gender",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "User status",
+                        "type": "boolean"
+                    },
+                    "phone": {
+                        "description": "User phone",
+                        "type": "number"
+                    },
+                    "profile_image": {
+                        "description": "User profile_image",
+                        "type": "string",
+                        "format": "file"
+                    },
+                    "role_id": {
+                        "description": "User role_id",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "User password",
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://localhost/oauth/authorize",
+                        "tokenUrl": "http://localhost/oauth/token",
+                        "refreshUrl": "http://localhost/token/refresh",
+                        "scopes": []
+                    }
+                }
+            },
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
