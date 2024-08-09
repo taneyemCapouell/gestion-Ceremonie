@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event_type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,13 @@ class EventTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Event_type::factory()->count(10)->create();
 
+        Event_type::create(['name' => 'mariage']);
+        Event_type::create(['name' => 'anniversaire']);
+        Event_type::create(['name' => 'batême']);
+        Event_type::create(['name' => 'funérail']);
+        Event_type::create(['name' => 'fête de travail']);
+        Event_type::create(['name' => 'réceptions d\'entreprise']);
+        Event_type::create(['name' => 'lancements de produits']);
     }
 }

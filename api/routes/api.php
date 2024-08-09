@@ -93,6 +93,8 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::group(['prefix' => 'event'], function () {
         // Event
+        Route::post('/verification', [EventController::class, 'verification']);
+        Route::post('generateCode/{event}', [EventController::class, 'generateCode']);
         Route::post('addEventType/', [EventController::class, 'addEventType']);
         Route::post('addEvent/', [EventController::class, 'addEvent']);
         Route::get('getAllEventType/', [EventController::class, 'getAllEventType']);

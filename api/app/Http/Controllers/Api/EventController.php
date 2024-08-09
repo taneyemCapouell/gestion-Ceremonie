@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Code;
 use App\Models\Event;
 use App\Models\Event_type;
 use App\Models\Gerer;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class EventController extends Controller
 {
@@ -172,7 +175,6 @@ class EventController extends Controller
             'owner_id' => 'required|exists:owners,id',
             'event_type_id' => 'required|exists:event_types,id',
             'number_of_space' => 'required|integer',
-            'number_of_table' => 'required|integer'
         ]);
 
         if ($validation->fails()) {
@@ -185,32 +187,21 @@ class EventController extends Controller
         }
 
         if ($validation->passes()) {
-            if (auth()->user()->role->name == 'admin' || 'évènementiel') {
+            if (auth()->check() && (auth()->user()->role->name == 'admin' || auth()->user()->role->name == 'évènementiel')) {
+                $date = Carbon::parse($request->date_start);
+                $formattedDate = $date->toDateString();
                 $event = Event::create([
                     "name" => $request->name,
                     "location" => $request->location,
                     "description" => $request->description,
                     "city" => $request->city,
-                    "date_start" => $request->date_start,
+                    "date_start" => $formattedDate,
                     "time" => $request->time,
                     "neighborhood" => $request->neighborhood,
                     'owner_id' => $request->owner_id,
                     'event_type_id' => $request->event_type_id,
                     'number_of_space' => $request->number_of_space,
-                    'rest_of_space' => $request->number_of_space,
-                    'number_of_table' => $request->number_of_table,
-                    'rest_of_table' => $request->number_of_table
                 ]);
-
-                // // Enregistrez l'id de l'evennement en session
-                // if ($event) {
-                //     // Session::put('event_id', $event->id);
-                //     $event_id = $request->session()->put('event_id', $event->id);
-                // } else {
-                //     return response()->json([
-                //         'msg' => 'Error',
-                //     ]);
-                // }
 
                 $gerer = Gerer::create([
                     "user_id" => Auth::user()->id,
@@ -223,7 +214,98 @@ class EventController extends Controller
                     "user_data" => $gerer,
                     "status" => 201,
                 ]);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 402);
             }
+        }
+    }
+
+    public function verification(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'code_name' => 'string|required|digits:4'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'error' => $validator->errors(),
+            ], 422);
+        }
+
+
+        $code = Code::where('code_name', $request->code_name)
+            ->first();
+
+
+        if ($code) {
+            $event = DB::table('codes')
+                ->join('events', 'codes.event_id', '=', 'events.id')
+                ->select(
+                    'events.id',
+                    'events.name',
+                    'codes.id',
+                    'codes.code_name',
+                )
+                ->where('events.id', $code->event_id)
+                ->first();
+
+            if ($event) {
+                return response()->json([
+                    "Connection reussi. vous controller l'evennement " . $event->name,
+                    $event
+                ], 200);
+            } else {
+                return response()->json([
+                    "Le code de verification a deja ete generer pour cet evennement",
+                ], 423);
+            }
+        } else {
+            return response()->json([
+                "Code de verification incorrect",
+            ], 424);
+        }
+    }
+
+
+    public function generateCode($event_id)
+    {
+        // test user role
+        $user = auth()->user();
+        if ($user) {
+            if (auth()->user()->role->value === 1 || 2) {
+
+                $code = random_int(1000, 9999);
+
+                $codeExists = Code::where('event_id', $event_id)->where('is_generate', true)->exists();
+                if (!$codeExists) {
+                    $event_type =  Code::create([
+                        // 'code_name' => Hash::make($code),
+                        'code_name' => $code,
+                        'event_id' => $event_id,
+                        'is_generate' => true
+                    ]);
+
+                    $getCode = Code::where('event_id', $event_id)->where('code_name', $code)->get();
+                } else {
+                    return response()->json([
+                        'error' => 'Un code de verification a déja  été creér pour cet évennement.'
+                    ], 402);
+                }
+
+                return response()->json([
+                    +"code" => $getCode,
+                    'Code generate successful',
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Vous n\'etes pas autoriser a effectuer cette action'
+                ], 403);
+            }
+        } else {
+            return response()->json([
+                'error' => 'Utilisateur non authentifier'
+            ], 405);
         }
     }
 
@@ -485,9 +567,8 @@ class EventController extends Controller
                 'events.city',
                 'events.neighborhood',
                 'events.number_of_space',
-                'events.number_of_table',
                 'events.rest_of_space',
-                'events.rest_of_table',
+                'events.guest_present',
                 'events.created_at',
                 'events.updated_at',
                 'owners.firstname as owner_firstname',
@@ -546,9 +627,8 @@ class EventController extends Controller
                 'events.city',
                 'events.neighborhood',
                 'events.number_of_space',
-                'events.number_of_table',
                 'events.rest_of_space',
-                'events.rest_of_table',
+                'events.guest_present',
                 'events.status',
                 'events.created_at',
                 'events.updated_at',
@@ -558,6 +638,7 @@ class EventController extends Controller
             )
             ->where('events.id', $id)
             ->get();
+        $getCode = Code::where('event_id', $id)->get();
 
         // $event = Event::with(['owners', 'event_types'])
         //     ->select('name', 'location', 'date_start', 'city', 'owners.firstname', 'event_types.name')
@@ -566,6 +647,7 @@ class EventController extends Controller
 
         return response()->json([
             'data' => $event,
+            "code" => $getCode,
             'status' => 200
         ],);
     }

@@ -93,10 +93,10 @@ class UserController extends Controller
             'firstname' => 'required|string|max:50',
             'lastname' => 'string|max:50',
             'gender' => 'string|max:10',
+            'user_code_confirmation' => 'string|max:4|min:4',
             'phone'  => 'integer|min:9|required|unique:users',
             'email' => 'required|string|min:5|max:50|email|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-            // 'profile_image' => 'file|mimes:jpeg,png,jpg,gif|max:8096',
+            'password' => 'required|string|confirmed|min:6|max:8',
             'role_id' => 'required|exists:roles,id'
         ]);
 
@@ -108,15 +108,8 @@ class UserController extends Controller
             ], 401);
         }
 
-        // $status = ($request->status === 1 ? 'activer' : 'deactiver');
 
         if ($validation->passes()) {
-
-            // // file name
-            // $filename = time() . '.' . $request->profile_image->extension();
-
-            // // Stocker le fichier dans le stockage (par exemple, le dossier public/storage/photos)
-            // $path = $request->profile_image->storeAs('images/users', $filename, 'public');
 
             // Mettre à jour la colonne 'photo' dans la table des utilisateurs avec le chemin du fichier
             $user = User::create([
@@ -126,7 +119,6 @@ class UserController extends Controller
                 "gender" => $request->gender,
                 "phone" => $request->phone,
                 "email" => $request->email,
-                // "profile_image" => $path,
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role_id
             ]);

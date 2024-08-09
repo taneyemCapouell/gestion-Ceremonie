@@ -63,9 +63,6 @@ class  UsersTableSeeder extends Seeder
         // $controlleur->roles()->attach([1,2]);
     }
 
-
-
-
     // public function run()
     // {
     //     // Utilisation de Faker pour générer des données aléatoires

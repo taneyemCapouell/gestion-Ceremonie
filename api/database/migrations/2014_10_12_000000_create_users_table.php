@@ -22,13 +22,10 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->boolean('status')->default(true);
             $table->string('profile_image')->nullable();
-            // $table->dateTime('create_at')->nullable();
-            // $table->dateTime('update_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->softDeletes();
-
             $table->uuid('role_id')->nullable(); // Champ UUID comme clé étrangère
             $table->timestamps();
 

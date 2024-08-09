@@ -120,8 +120,8 @@ class GuestController extends Controller
             //     ['id' => $event],
             //     ['rest_of_space' => DB::raw('rest_of_space - ' . $capacityValue)]
             // );
-            // I decrement the value of the rest of place by 1 in the event table
-            DB::table('events')->where('id', $guest->event_id)->decrement('rest_of_space');
+            // I increment the value guest_present by 1 in the event table
+            DB::table('events')->where('id', $guest->event_id)->increment('guest_present');
 
             return response()->json([
                 'msg' => 'Guest created sucessfuly',
@@ -308,8 +308,8 @@ class GuestController extends Controller
         $tableInEvent = Table::where('event_id', $id)->get();
 
         return response()->json([
-             $tableInEvent,
-             200
+            $tableInEvent,
+            200
         ]);
     }
 
@@ -329,7 +329,7 @@ class GuestController extends Controller
 
         if ($placeInTable) {
             return response()->json([
-                'msg' => $placeInTable,
+                $placeInTable,
                 200
             ]);
         } else {

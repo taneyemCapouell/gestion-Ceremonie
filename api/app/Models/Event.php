@@ -28,11 +28,11 @@ class Event extends Model
         'city',
         'neighborhood',
         'owner_id',
+        'event_id',
         'event_type_id',
         "number_of_space",
         "rest_of_space",
-        "number_of_table",
-        "rest_of_table"
+        "guest_present",
     ];
 
     // const PENDING = 'pending';//En attente

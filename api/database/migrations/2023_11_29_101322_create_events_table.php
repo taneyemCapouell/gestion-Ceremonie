@@ -22,14 +22,11 @@ return new class extends Migration
             $table->string('status')->default('En attente');
             $table->string('city');
             $table->integer('number_of_space');
-            $table->integer('rest_of_space');
-            $table->string('number_of_table');
-            $table->string('rest_of_table');
+            $table->integer('rest_of_space')->default(0);
+            $table->integer('guest_present')->default(0);
             $table->string('neighborhood');
             $table->time('time');
             $table->softDeletes();
-            // $table->uuid('owner_id');
-            // $table->uuid('event_type_id');
             $table->timestamps();
             $table->foreignUuid('owner_id')->constrained()->references('id')->on('owners')
                 ->onUpdate('cascade')

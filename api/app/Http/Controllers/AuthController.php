@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Code;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,6 +27,7 @@ class AuthController extends Controller
             "updateUserPassword"
         ]]);
     }
+
     /**
      * @OA\Post(
      *     path="/api/auth/register",
@@ -127,47 +132,48 @@ class AuthController extends Controller
      */
     // login user controller
     public function login(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'email' => ['required', 'string', 'email', 'max:40'],
-        'password' => ['required', 'string', 'min:6'],
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email', 'max:40'],
+            'password' => ['required', 'string', 'min:6'],
+        ]);
 
-    if ($validator->fails()) {
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'error' => $validator->errors(),
+            ], 422);
+        }
+
+        $credentials = $request->only('email', 'password');
+        $token = auth()->attempt($credentials);
+
+        if (!$token) {
+            return response()->json([
+                'error' => 'Email ou mot de passe incorrect.',
+            ], 401);
+        }
+
+        $user = Auth::user();
+
+        if ($user->status === 0) {
+            Auth::logout();
+            return response()->json([
+                'error' => "Votre compte n'est pas actif.",
+            ], 402);
+        }
+
+        $role = $user->role->name;
+
         return response()->json([
-            'success' => false,
-            'error' => $validator->errors(),
-        ], 422);
+            "msg" => "Utilisateur connecté avec succès.",
+            "access_token" => $token,
+            "token_type" => 'Bearer',
+            "user" => $user,
+            "role" => $role,
+        ])->cookie('jwt', $token);
     }
 
-    $credentials = $request->only('email', 'password');
-    $token = auth()->attempt($credentials);
-
-    if (!$token) {
-        return response()->json([
-            'error' => 'Email ou mot de passe incorrect.',
-        ] , 401);
-    }
-
-    $user = Auth::user();
-
-    if ($user->status === 0) {
-        Auth::logout();
-        return response()->json([
-            'error' => "Votre compte n'est pas activé.",
-        ] , 402 );
-    }
-
-    $role = $user->role->name;
-
-    return response()->json([
-        "msg" => "Utilisateur connecté avec succès.",
-        "access_token" => $token,
-        "token_type" => 'Bearer',
-        "user" => $user,
-        "role" => $role,
-    ])->cookie('jwt', $token);
-}
 
     /**
      * @OA\Get(
@@ -188,7 +194,7 @@ class AuthController extends Controller
      * )
      */
     //  get user informations
-    public function profile(Request $request)
+    public function profile()
     {
         // Renvoyer les informations de l'utilisateur connecté
         return response()->json(['user' => Auth::user()], 200);
@@ -256,11 +262,19 @@ class AuthController extends Controller
     {
 
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'old_password' => 'required|string',
-            'new_password' => 'required|string',
-            'confirm_password' => 'required|string'
+            'new_password' => 'required|string|min:6|max:8',
+            'confirm_password' => 'required|string|same:new_password'
         ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json([
+                'success' => false,
+                'error' => $errors,
+            ], 401);
+        }
 
         // $user = Auth::user();
 
@@ -269,20 +283,14 @@ class AuthController extends Controller
                 [
                     'msg' => 'Incorrect password'
                 ],
-                401
+                402
             );
-        }
-
-        if ($request->new_password !== $request->confirm_password) {
-            return response()->json([
-                'msg' => 'The passwords do not match.'
-            ]);
         }
 
         if (trim($request->new_password) !== trim($request->confirm_password)) {
             return response()->json([
                 'msg' => 'The passwords do not match'
-            ]);
+            ], 403);
         }
 
         $request->user()->update([
@@ -293,7 +301,7 @@ class AuthController extends Controller
             [
                 'msg' => 'Your password has been updated successfull'
             ],
-            201
+            200
         );
     }
 

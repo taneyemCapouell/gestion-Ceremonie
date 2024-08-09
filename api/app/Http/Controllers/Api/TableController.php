@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\PlaceImport;
 use App\Imports\TableImport;
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\Place;
 use App\Models\PlaceTable;
 use App\Models\Table;
@@ -234,21 +235,22 @@ class TableController extends Controller
                 "event_id" => $request->event_id,
             ]);
 
-            // if ($table) {
-            //     $tableInfo = DB::table('tables')
-            //     ->join('categories', 'tables.categorie_id', '=', 'categories.id')
-            //     ->join('events', 'tables.event_id', '=', 'events.id')
-            //     ->select(
-            //         'tables.name',
-            //         'tables.status',
-            //         'tables.capacity',
-            //         'categories.name as categorie_name',
-            //         'events.name as event_name',
+            if ($table) {
+                $event = Event::where('id', $table->event_id)->first();
 
-            //     )
-            //     ->where('tables.id', $table->id)
-            //     ->get();
-            // }
+                $rest_of_place  =  $event->number_of_space - $table->capacity;
+
+                if ($rest_of_place < 0) {
+                    return response()->json([
+                        'place disponible',
+                        $event->rest_of_space,
+                    ], 406);
+                }
+
+                $event->rest_of_place = $rest_of_place;
+                $event->save();
+            }
+
 
             // // Générer le code QR
             // if ($tableInfo) {
@@ -265,16 +267,12 @@ class TableController extends Controller
             // ]);
 
 
-            // if ($table) {
-            //     // Récupérer l'ID du dernier élément enregistré
-            //     $lastTableId = DB::table('tables')->max('id');
-            // }
 
             return response()->json([
-                'msg' => 'Table created sucessfuly',
-                // $qrCodePath,
-                $table, 201,
-            ]);
+                'Table created sucessfuly',
+                $rest_of_place,
+                $table,
+            ], 200);
         }
     }
 
@@ -491,7 +489,7 @@ class TableController extends Controller
         $table->update();
         return response()->json([
             "msg" => "Table successful updated.",
-        ]);
+        ], 200);
     }
 
     /**
